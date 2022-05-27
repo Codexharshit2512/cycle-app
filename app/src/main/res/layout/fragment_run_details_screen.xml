@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <ImageView
+      android:id="@+id/track_image"
+      android:layout_width="0dp"
+      android:layout_height="450dp"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/track_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:elevation="20dp"
+        app:flexDirection="column"
+        app:justifyContent="center"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="20dp"
+        android:background="@color/light_bg"
+      >
+
+      <com.example.cycletrackingapp.custom_views.MultiTextView
+          android:id="@+id/duration_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:description="Duration"
+          app:valueText="1:01:16"
+          app:valueSize="@dimen/medium_text"
+          app:valueOrder="1"
+          app:descOrder="-1"
+        />
+
+      <com.example.cycletrackingapp.custom_views.MultiTextView
+          android:id="@+id/distance_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:description="Distance"
+          app:valueText="16.44 km"
+          app:valueSize="@dimen/medium_text"
+          app:valueOrder="1"
+          app:descOrder="-1"
+          />
+
+      <com.example.cycletrackingapp.custom_views.MultiTextView
+          android:id="@+id/avg_speed_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:description="AVG SPEED"
+          app:valueSize="@dimen/medium_text"
+          app:valueText="16.1 kph"
+          app:valueOrder="1"
+          app:descOrder="-1"
+          />
+
+      <com.example.cycletrackingapp.custom_views.MultiTextView
+          android:id="@+id/max_speed_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:description="MAX SPEED"
+          app:valueSize="@dimen/medium_text"
+          app:valueText="36.8 kph"
+          app:valueOrder="1"
+          app:descOrder="-1"
+          />
+
+      <com.example.cycletrackingapp.custom_views.MultiTextView
+          android:id="@+id/calories_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:description="CALORIES"
+          app:valueSize="@dimen/medium_text"
+          app:valueText="476.4 kcal"
+          app:valueOrder="1"
+          app:descOrder="-1"
+          />
+    </com.google.android.flexbox.FlexboxLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

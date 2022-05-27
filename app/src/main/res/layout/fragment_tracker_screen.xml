@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity"
+    >
+
+
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/stopwatch_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".HomeActivity" />
+
+                <LinearLayout
+                    android:id="@+id/action_buttons_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="25dp"
+                    >
+                    <include
+                        app:layout_constraintTop_toTopOf="@+id/timer"
+                        layout="@layout/lock_view"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tracking_container"
+                        />
+                            <Button
+                                android:id="@+id/start_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Start"
+                                android:textSize="@dimen/medium_text"
+                                android:paddingHorizontal="20dp"
+                                android:paddingVertical="6dp"
+                                android:backgroundTint="@color/dark_bg"
+                                android:visibility="visible"
+                                />
+                </LinearLayout>
+    </RelativeLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/stopwatch_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/medium_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingVertical="10dp"
+        >
+
+        <com.example.cycletrackingapp.custom_views.MultiTextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:description="@string/tracker_duration"
+            app:descriptionStyle="bold"
+            app:valueText="@string/default_timer"
+            app:valueSize="54sp"
+            app:valueStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timer"
+            android:orientation="horizontal"
+            >
+            <com.example.cycletrackingapp.custom_views.MultiTextView
+                android:id="@+id/tracker_distance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:description="@string/tracker_distance"
+                android:layout_weight="1"
+                app:descriptionSize="14sp"
+                app:valueSize="22sp"
+                />
+
+            <com.example.cycletrackingapp.custom_views.MultiTextView
+                android:id="@+id/tracker_speed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:description="@string/tracker_speed"
+                android:layout_weight="1"
+                app:descriptionSize="14sp"
+                app:valueSize="22sp"
+                />
+
+            <com.example.cycletrackingapp.custom_views.MultiTextView
+                android:id="@+id/tracker_calories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:description="@string/tracker_calories"
+                android:layout_weight="1"
+                app:descriptionSize="14sp"
+                app:valueSize="22sp"
+                />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

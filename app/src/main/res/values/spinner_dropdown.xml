@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sorting_choices">
+        <item>Date</item>
+        <item>Running Time</item>
+        <item>Distance</item>
+        <item>Average Speed</item>
+        <item>Calories Burned</item>
+    </string-array>
+    <declare-styleable name="MultiTextView">
+        <attr name="valueText" format="string" />
+        <attr name="description" format="string" />
+        <attr name="valueColor" format="color" />
+        <attr name="descriptionColor" format="color" />
+        <attr name="valueSize" format="dimension" />
+        <attr name="descriptionSize" format="dimension" />
+        <attr name="flexDirection" />
+        <attr name="valueOrder" format="integer" />
+        <attr name="descOrder" format="integer" />
+        <attr name="valueStyle" format="enum">
+            <enum name="bold" value="0" />
+            <enum name="italic" value="1" />
+        </attr>
+        <attr name="descriptionStyle" format="enum">
+            <enum name="bold" value="0" />
+            <enum name="italic" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="DynamicButton">
+        <attr name="text" format="string" />
+        <attr name="android:textSize" format="dimension" />
+        <attr name="android:textColor" format="color" />
+        <attr name="android:textStyle" />
+        <attr name="loaderBackground" format="color" />
+        <attr name="loading" format="boolean" />
+        <attr name="loaderWidth" format="dimension" />
+        <attr name="loaderHeight" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="RecordCard">
+        <attr name="heading" format="string" />
+        <attr name="iconDrawable" format="reference" />
+        <attr name="valueText" />
+        <attr name="subText" format="string" />
+    </declare-styleable>
+</resources>

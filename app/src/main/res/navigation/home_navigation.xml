@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/historyFragment">
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.cycletrackingapp.screens.HistoryFragment"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_trackerScreen"
+            app:destination="@id/trackerScreen" />
+        <action
+            android:id="@+id/action_historyFragment_to_runDetailsScreen"
+            app:destination="@id/runDetailsScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.cycletrackingapp.screens.StatsFragment"
+        android:label="fragment_stats"
+        tools:layout="@layout/fragment_stats" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.cycletrackingapp.screens.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/trackerScreen"
+        android:name="com.example.cycletrackingapp.screens.TrackerScreen"
+        android:label="TrackerScreen"
+        tools:layout="@layout/fragment_tracker_screen"
+        >
+        <action
+            android:id="@+id/action_trackerScreen_to_historyFragment"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_trackerScreen_to_endRunScreen"
+            app:destination="@id/endRunScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/endRunScreen"
+        android:name="com.example.cycletrackingapp.screens.EndRunScreen"
+        android:label="EndRunScreen" >
+        <action
+            android:id="@+id/action_endRunScreen_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/runDetailsScreen"
+        android:name="com.example.cycletrackingapp.screens.RunDetailsScreen"
+        android:label="RunDetailsScreen" />
+    <fragment
+        android:id="@+id/recordsFragment"
+        android:name="com.example.cycletrackingapp.screens.RecordScreen"
+        android:label="Records"
+        tools:layout="@layout/fragment_record_screen" >
+        <action
+            android:id="@+id/action_recordScreen_to_runDetailsScreen"
+            app:destination="@id/runDetailsScreen"
+            />
+    </fragment>
+</navigation>

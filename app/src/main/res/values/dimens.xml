@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="input_padding_horizontal">17dp</dimen>
+    <dimen name="input_padding_vertical">9dp</dimen>
+    <dimen name="large_text">30sp</dimen>
+    <dimen name="medium_text">20sp</dimen>
+    <dimen name="small_text">12sp</dimen>
+    <dimen name="semi_small_text">14sp</dimen>
+</resources>
