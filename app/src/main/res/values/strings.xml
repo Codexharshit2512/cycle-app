@@ -30,4 +30,5 @@
     <string name="max_time">Longest Duration</string>
     <string name="max_speed">Max Speed</string>
     <string name="records">Records</string>
+    <string name="run_value">%1$s %2$s</string>
 </resources>

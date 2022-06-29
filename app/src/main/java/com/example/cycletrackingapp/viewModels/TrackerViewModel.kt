@@ -54,6 +54,14 @@ class TrackerViewModel(private val repo:MainRepository) : ViewModel() {
     }
 
     private fun getCalories(list:PathPoints):Double{
+        if(runInfo.value==null) return 0.0
+        if(list.size>0 && list.last().size>0){
+            val loc=list.last().last()
+            val MET=8.0
+            val weight=80.0
+            val timeDiff=(loc.time-startTime)/1000/60
+            return MET*weight*timeDiff
+        }
         return 0.0
     }
 
@@ -117,11 +125,16 @@ class TrackerViewModel(private val repo:MainRepository) : ViewModel() {
                 override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
                     uploadingLoading.value=false
                     Log.i("from tracker view model","uploading result -> $resultData")
+                    val list=LocationService.pathPoints.value!!
+                    var timePassed=0L
+                    if(list.size > 0 && list.last().size>0){
+                        timePassed=list.last().last().time-startTime
+                    }
                     val newRun = Run(
                         resultData?.get("secure_url").toString(),
                         startTime,
                         runInfo.value!!.distance,
-                        0,
+                        timePassed,
                         runInfo.value!!.caloriesBurned,
                         MathUtils.computeAverageSpeed(LocationService.pathPoints.value!!),
                         MathUtils.computeMaxSpeed(LocationService.pathPoints.value!!),
@@ -135,11 +148,16 @@ class TrackerViewModel(private val repo:MainRepository) : ViewModel() {
                 override fun onError(requestId: String?, error: ErrorInfo?) {
                     uploadingLoading.value=false
                     Log.i("from tracker view model","uploading failed -> $error")
+                    val list=LocationService.pathPoints.value!!
+                    var timePassed=0L
+                    if(list.size > 0 && list.last().size>0){
+                        timePassed=list.last().last().time-startTime
+                    }
                     val newRun = Run(
                         null,
                         startTime,
                         runInfo.value!!.distance,
-                        0,
+                        timePassed,
                         runInfo.value!!.caloriesBurned,
                         MathUtils.computeAverageSpeed(LocationService.pathPoints.value!!),
                         MathUtils.computeMaxSpeed(LocationService.pathPoints.value!!),

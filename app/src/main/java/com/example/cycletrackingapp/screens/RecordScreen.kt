@@ -5,12 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cycletrackingapp.CustomApplication
 import com.example.cycletrackingapp.R
+import com.example.cycletrackingapp.adapters.RecordAdapter
 import com.example.cycletrackingapp.custom_views.RecordCard
 import com.example.cycletrackingapp.databinding.FragmentRecordScreenBinding
+import com.example.cycletrackingapp.listeners.RunClickListener
+import com.example.cycletrackingapp.models.Run
 import com.example.cycletrackingapp.utils.Constant
 import com.example.cycletrackingapp.viewModels.HistoryViewModel
 import com.example.cycletrackingapp.viewModels.ModelFactory
@@ -26,7 +31,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RecordScreen.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RecordScreen : Fragment() {
+class RecordScreen : Fragment() ,RunClickListener{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -47,8 +52,7 @@ class RecordScreen : Fragment() {
         // Inflate the layout for this fragment
         binding= FragmentRecordScreenBinding.inflate(inflater,container,false)
         setupViewModel()
-        initCardData()
-        setCardClickListeners()
+        setUpRecylerView()
         return binding.root
     }
 
@@ -61,48 +65,24 @@ class RecordScreen : Fragment() {
         }
     }
 
-    private fun initCardData(){
-       val c1 = binding.root.getChildAt(0) as RecordCard
-        val c2 = binding.root.getChildAt(0) as RecordCard
-        val c3 = binding.root.getChildAt(0) as RecordCard
-        val c4 = binding.root.getChildAt(0) as RecordCard
-        c1.setValueText(viewModel.maxDistanceRun?.distance.toString())
-        c2.setValueText(viewModel.maxCaloriesRun?.calories.toString())
-        c3.setValueText(viewModel.maxDurationRun?.time.toString())
-        c4.setValueText(viewModel.maxSpeedRun?.maxSpeed.toString())
+    private fun setUpRecylerView(){
+        val recordsAdapter = RecordAdapter(requireContext(),viewModel.records.value!!,this)
+        binding.recordRecyclerView.apply {
+            layoutManager=LinearLayoutManager(context)
+            adapter=recordsAdapter
+        }
+
+        viewModel.records.observe(viewLifecycleOwner, Observer {
+            recordsAdapter.updateDataList(it)
+            recordsAdapter.notifyDataSetChanged()
+        })
     }
 
-    private fun setCardClickListeners(){
-        binding.root.getChildAt(0).setOnClickListener {
-            val bundle = Bundle()
-            val run = viewModel.maxDistanceRun
-            bundle.putParcelable("run",run)
-            findNavController().navigate(R.id.action_recordScreen_to_runDetailsScreen)
-        }
-
-        binding.root.getChildAt(1).setOnClickListener {
-            val bundle = Bundle()
-            val run = viewModel.maxCaloriesRun
-            bundle.putParcelable("run",run)
-            findNavController().navigate(R.id.action_recordScreen_to_runDetailsScreen)
-        }
-
-        binding.root.getChildAt(2).setOnClickListener {
-            val bundle = Bundle()
-            val run = viewModel.maxDurationRun
-            bundle.putParcelable("run",run)
-            findNavController().navigate(R.id.action_recordScreen_to_runDetailsScreen)
-        }
-
-        binding.root.getChildAt(3).setOnClickListener {
-            val bundle = Bundle()
-            val run = viewModel.maxSpeedRun
-            bundle.putParcelable("run",run)
-            findNavController().navigate(R.id.action_recordScreen_to_runDetailsScreen)
-        }
+    override fun onRecordClick(run: Run) {
+        val bundle = Bundle()
+        bundle.putParcelable("run",run)
+        findNavController().navigate(R.id.action_recordScreen_to_runDetailsScreen,bundle)
     }
-
-
 
     companion object {
         /**

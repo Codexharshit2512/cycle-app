@@ -1,12 +1,23 @@
 package com.example.cycletrackingapp.screens
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.example.cycletrackingapp.CustomApplication
 import com.example.cycletrackingapp.R
 import com.example.cycletrackingapp.databinding.FragmentEndRunScreenBinding
+import com.example.cycletrackingapp.models.Run
+import com.example.cycletrackingapp.utils.Constant
+import com.example.cycletrackingapp.viewModels.FinalizeRunViewModel
+import com.example.cycletrackingapp.viewModels.ModelFactory
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +34,8 @@ class EndRunScreen : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding:FragmentEndRunScreenBinding
+    private lateinit var viewModel:FinalizeRunViewModel
+    private var toast:Toast?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,10 +47,48 @@ class EndRunScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding= FragmentEndRunScreenBinding.inflate(inflater,container,false)
+        setupViewModel()
+        setupUI()
         return binding.root
+    }
+
+    private fun setupViewModel(){
+        val app= activity?.application as CustomApplication
+        val factory = ModelFactory(app.repo,Constant.END_RUN_VIEWMODEL_CODE)
+        viewModel=ViewModelProvider(this,factory).get(FinalizeRunViewModel::class.java)
+    }
+
+    private fun setupUI(){
+        val run = arguments?.getParcelable("run") as Run?
+        run?.let{
+            if(it.previewImage==null){
+                binding.runningTrackImage.setImageResource(R.drawable.no_image)
+            }
+            else{
+                Glide
+                    .with(this)
+                    .load(it.previewImage)
+                    .into(binding.runningTrackImage)
+            }
+            binding.submitBtn.setOnClickListener(object : View.OnClickListener{
+                override fun onClick(p0: View?) {
+                    Log.i("from end run","button clicked")
+                    if(binding.titleInput.text.isEmpty()){
+                        if(toast==null) toast=Toast.makeText(requireContext(),"Please Enter a Title",Toast.LENGTH_LONG)
+                        toast?.show()
+                    }
+                    else{
+                        viewModel.addRun(it,findNavController(),binding.titleInput.text.toString())
+                    }
+                }
+            })
+        }
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            binding.submitBtn.setButtonLoading(it)
+        })
     }
 
     companion object {

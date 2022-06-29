@@ -1,6 +1,7 @@
 package com.example.cycletrackingapp.utils
 
 import android.content.Context
+import android.content.res.Resources
 import com.example.cycletrackingapp.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,7 +14,7 @@ object DateTimeUtil {
         return sdf.format(date)
     }
 
-    fun extractTime(time:Long,context: Context):String{
+    fun extractTime(time:Long):String{
         var rem = time
         val msInHour=1000*60*60
         val hours = rem / msInHour
@@ -29,6 +30,6 @@ object DateTimeUtil {
         val ss= if(sec>9) sec.toString()
         else "0$sec"
 
-        return context.resources.getString(R.string.stop_watch_time,hs,ms,ss)
+        return Resources.getSystem().getString(R.string.stop_watch_time,hs,ms,ss)
     }
 }

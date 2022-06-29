@@ -15,7 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_launcher_background"
         android:scaleType="fitXY"
         />
 
@@ -49,6 +48,7 @@
             />
 
         <com.example.cycletrackingapp.custom_views.DynamicButton
+            android:id="@+id/submit_btn"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             app:text="Continue"

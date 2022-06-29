@@ -19,6 +19,7 @@ import com.example.cycletrackingapp.CustomApplication
 import com.example.cycletrackingapp.R
 import com.example.cycletrackingapp.adapters.RunsHistoryAdapter
 import com.example.cycletrackingapp.databinding.FragmentHistoryBinding
+import com.example.cycletrackingapp.listeners.RunClickListener
 import com.example.cycletrackingapp.models.Run
 import com.example.cycletrackingapp.utils.Constant
 import com.example.cycletrackingapp.viewModels.HistoryViewModel
@@ -34,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HistoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(),RunClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -71,8 +72,8 @@ class HistoryFragment : Fragment() {
 
     private fun setActionButtonListener(){
         binding.floatActionBtn.setOnClickListener{
-//            findNavController().navigate(R.id.action_historyFragment_to_trackerScreen)
-            findNavController().navigate(R.id.action_historyFragment_to_runDetailsScreen)
+            findNavController().navigate(R.id.action_historyFragment_to_trackerScreen)
+//            findNavController().navigate(R.id.action_historyFragment_to_runDetailsScreen)
 //            viewModel.addNewRun(Run())
 //            Toast.makeText(requireContext(),"Run added",Toast.LENGTH_LONG)
         }
@@ -107,7 +108,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun setupRunHistoryAdapter(){
-        historyAdapter = RunsHistoryAdapter(requireContext(),viewModel.runs.value)
+        historyAdapter = RunsHistoryAdapter(requireContext(),viewModel.runs.value,this)
         binding.runsHistoryRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter=historyAdapter
@@ -127,6 +128,12 @@ class HistoryFragment : Fragment() {
             historyAdapter.updateList(it)
             historyAdapter.notifyDataSetChanged()
         })
+    }
+
+    override fun onRecordClick(run: Run) {
+        val bundle=Bundle()
+        bundle.putParcelable("run",run)
+        findNavController().navigate(R.id.action_historyFragment_to_runDetailsScreen,bundle)
     }
 
     companion object {

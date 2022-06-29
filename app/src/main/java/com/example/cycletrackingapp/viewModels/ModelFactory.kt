@@ -23,6 +23,10 @@ class ModelFactory(private val repo:MainRepository?,private val type:Int):ViewMo
             @Suppress("UNCHECKED_CAST")
             return RecordsViewModel(repo!!) as T
         }
+        else if(type==Constant.END_RUN_VIEWMODEL_CODE){
+            @Suppress("UNCHECKED_CAST")
+            return FinalizeRunViewModel(repo!!) as T
+        }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

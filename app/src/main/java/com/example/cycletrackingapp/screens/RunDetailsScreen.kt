@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.cycletrackingapp.R
+import com.example.cycletrackingapp.databinding.FragmentRunDetailsScreenBinding
+import com.example.cycletrackingapp.models.Run
+import com.example.cycletrackingapp.utils.DateTimeUtil
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +27,9 @@ class RunDetailsScreen : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var binding:FragmentRunDetailsScreenBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -36,7 +43,29 @@ class RunDetailsScreen : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_run_details_screen, container, false)
+        binding= FragmentRunDetailsScreenBinding.inflate(inflater,container,false)
+        val run = arguments?.getParcelable("run") as Run?
+        updateUI(run)
+        return binding.root
+    }
+
+    private fun updateUI(run: Run?){
+        run?.let {
+            binding.apply {
+                setTrackImage(run)
+                durationText.infoText=DateTimeUtil.extractTime(it.time)
+                distanceText.infoText=getString(R.string.run_value,it.distance.toString(),"km")
+                avgSpeedText.infoText=getString(R.string.run_value,it.averageSpeed.toString(),"km/h")
+                maxSpeedText.infoText=getString(R.string.run_value,it.maxSpeed.toString(),"km/h")
+                caloriesText.infoText=getString(R.string.run_value,it.calories.toString(),"kcal")
+            }
+        }
+    }
+
+    private fun setTrackImage(run:Run?){
+        run?.let {
+            Glide.with(requireContext()).load(it.previewImage).into(binding.trackImage)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -20,4 +20,5 @@ object Constant {
     const val TRACKER_VIEWMODEL_CODE=3
     const val ENDRUN_VIEWMODEL_CODE=4
     const val RECORD_VIEWMODEL_CODE=5
+    const val END_RUN_VIEWMODEL_CODE=6
 }

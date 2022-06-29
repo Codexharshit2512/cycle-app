@@ -14,10 +14,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import com.example.cycletrackingapp.R
 import com.example.cycletrackingapp.databinding.FragmentTrackerScreenBinding
 import com.example.cycletrackingapp.services.LocationService
@@ -31,8 +29,8 @@ import com.example.cycletrackingapp.CustomApplication
 import com.example.cycletrackingapp.custom_views.PresentationalDialog
 import com.example.cycletrackingapp.services.PathPoints
 import com.example.cycletrackingapp.utils.Constant
+import com.example.cycletrackingapp.utils.ConverterUtils
 import com.example.cycletrackingapp.utils.PermissionUtility
-import com.example.cycletrackingapp.viewModels.HistoryViewModel
 import com.example.cycletrackingapp.viewModels.ModelFactory
 import com.example.cycletrackingapp.viewModels.TrackerViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -76,7 +74,7 @@ class TrackerScreen : Fragment(),OnMapReadyCallback,GoogleMap.SnapshotReadyCallb
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding= FragmentTrackerScreenBinding.inflate(inflater,container,false)
         val mapFragment=childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -106,6 +104,7 @@ class TrackerScreen : Fragment(),OnMapReadyCallback,GoogleMap.SnapshotReadyCallb
                 if(LocationService.tracking.value==Constant.TRACKING_NOT_STARTED){
                     setLocationChangeObservers()
                     startTrackingUser()
+                    markStartTime()
                 }
             }
 
@@ -253,8 +252,9 @@ class TrackerScreen : Fragment(),OnMapReadyCallback,GoogleMap.SnapshotReadyCallb
         loc ?: return
         val location= LatLng(loc.latitude,loc.longitude)
         if(userLocationMarker==null){
+//            val imageBitmap = ConverterUtils.convertVectorToBitmap(R.drawable.cycle_image,requireContext())
             val markerOptions = MarkerOptions()
-//                .icon(BitmapDescriptorFactory.fromResource(R.drawable.car))
+//                .icon(imageBitmap)
                 .position(location)
                 .anchor(0.5f,0.5f)
                 .rotation(loc.bearing)
@@ -402,7 +402,7 @@ class TrackerScreen : Fragment(),OnMapReadyCallback,GoogleMap.SnapshotReadyCallb
                    bounds.include(temp)
                }
             }
-            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(),30))
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(),60))
             takeMapSnapshot()
         }
     }
